@@ -1,0 +1,7 @@
+# file(GLOB ROUTE_SRCS "*.c")
+# foreach(src ${ROUTE_SRCS})
+#     get_filename_component(modname ${src} NAME_WE)
+#     add_library(${modname} SHARED ${src})
+#     target_include_directories(${modname} PRIVATE ${CMAKE_SOURCE_DIR}/core)
+#     set_target_properties(${modname} PROPERTIES PREFIX "route_" SUFFIX ".so")
+# endforeach()
