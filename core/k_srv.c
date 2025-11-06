@@ -64,7 +64,7 @@ void launch(struct K_server *server){
 		if (bytes > 0) {
 			buffer[bytes] = '\0';  // Null-terminate the received data
 
-			K_httpReq *req = k_http_req_parse(buffer);
+			K_httpReq *req = k_http_req_parse(buffer, bytes);
 
 			//TODO Implement logger and use it here
 			printf("Received request:\n");
@@ -92,7 +92,7 @@ void launch(struct K_server *server){
 								"</body>\r\n" 
 								"</html>\r\n"
 								;
-			k_http_res_set_body(res, body);
+			k_http_res_set_body(res, body, strlen(body));
 
 
 			k_http_res_send(new_socket, res);

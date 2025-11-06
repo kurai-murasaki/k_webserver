@@ -31,6 +31,19 @@
 
 
 
+/**
+* @struct K_httpHeader
+* @brief HTTP header structure
+* @details This structure holds the key-value pairs of HTTP headers.
+*/
+typedef struct{
+		char *key;
+		char *value;
+} K_httpHeader;
+
+
+
+
 
 
 /**
@@ -49,10 +62,8 @@ typedef struct {
 	char *uri;
 	char *version;
 	char *body;
-	struct k_header {
-		char *key;
-		char *value;
-	} *headers;
+	size_t body_length;
+	K_httpHeader *headers;
 	size_t header_count;
 } K_httpReq;
 
@@ -71,7 +82,8 @@ typedef struct {
 typedef struct {
 	int status_code;
 	char *body;
-	struct k_header *headers;
+	size_t body_length;
+	K_httpHeader *headers;
 	size_t header_count;
 } K_httpRes;
 
@@ -87,7 +99,7 @@ typedef struct {
 * @param raw_request Pointer to the raw HTTP request string.
 * @return Pointer to the parsed HTTP request structure.
 */
-K_httpReq *k_http_req_parse(const char *raw_request);
+K_httpReq *k_http_req_parse(const char *raw_request, size_t raw_req_len);
 
 /**
 * @name k_http_req_free()
@@ -116,7 +128,7 @@ K_httpRes *k_http_res_create();
 * @param body Pointer to the response body string.
 * @return None
 */
-void k_http_res_set_body(K_httpRes *res, const char *body);
+void k_http_res_set_body(K_httpRes *res, const char *body, size_t len);
 
 
 /**
