@@ -1,0 +1,20 @@
+[
+{
+  "directory": "/home/kurai/projects/kurai-webserver/build/core",
+  "command": "/usr/bin/cc  -I/home/kurai/projects/kurai-webserver/core -g -std=gnu11 -fPIC -o CMakeFiles/k_core.dir/k_http.c.o -c /home/kurai/projects/kurai-webserver/core/k_http.c",
+  "file": "/home/kurai/projects/kurai-webserver/core/k_http.c",
+  "output": "core/CMakeFiles/k_core.dir/k_http.c.o"
+},
+{
+  "directory": "/home/kurai/projects/kurai-webserver/build/core",
+  "command": "/usr/bin/cc  -I/home/kurai/projects/kurai-webserver/core -g -std=gnu11 -fPIC -o CMakeFiles/k_core.dir/k_srv.c.o -c /home/kurai/projects/kurai-webserver/core/k_srv.c",
+  "file": "/home/kurai/projects/kurai-webserver/core/k_srv.c",
+  "output": "core/CMakeFiles/k_core.dir/k_srv.c.o"
+},
+{
+  "directory": "/home/kurai/projects/kurai-webserver/build/core",
+  "command": "/usr/bin/cc  -I/home/kurai/projects/kurai-webserver/core -g -std=gnu11 -fPIE -o CMakeFiles/kurai-webserver.dir/main.c.o -c /home/kurai/projects/kurai-webserver/core/main.c",
+  "file": "/home/kurai/projects/kurai-webserver/core/main.c",
+  "output": "core/CMakeFiles/kurai-webserver.dir/main.c.o"
+}
+]

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libk_core.a CMakeFiles/k_core.dir/k_http.c.o CMakeFiles/k_core.dir/k_srv.c.o
+/usr/bin/ranlib libk_core.a

@@ -1,10 +1,13 @@
 #include "k_srv.h"
+#include "k_http.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include <unistd.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+
 
 struct K_server *create_server(
 	int domain, int port, int service, int protocol, int backlog, u_long interface, void(*launch)(struct K_server *server)
@@ -58,26 +61,46 @@ void launch(struct K_server *server){
 		socklen_t addrlen = sizeof(server->address);
 		int new_socket = accept(server->socket, (struct sockaddr *)&server->address, &addrlen);
 		ssize_t bytes = recv(new_socket, buffer, sizeof(buffer) - 1, 0);
-		if (bytes >= 0) {
+		if (bytes > 0) {
 			buffer[bytes] = '\0';  // Null-terminate the received data
-			printf("Received request:\n%s\n", buffer);
-			puts(buffer);
+
+			K_httpReq *req = k_http_req_parse(buffer);
+
+			//TODO Implement logger and use it here
+			printf("Received request:\n");
+			printf("%s %s %s\n", req->method, req->uri, req->version);
+			for (size_t i = 0; i < req->header_count; i++) {
+				printf("%s: %s\n", req->headers[i].key, req->headers[i].value);
+			}
+			printf("\n%s\n", req->body ? req->body : "");
+
+			k_http_req_free(req);
+
 		} else {
 			perror("+===<- Error reading buffer... ->===+");
 		}
-		char *response = "HTTP/1.1 200 OK\r\n"
-						 "Content-Type: text/html; charset=UTF-8 \r\n\r\n"
-						 "<!DOCTYPE html>\r\n"
-						 "<html>\r\n"
-                         "<head>\r\n"
-                         "<title>Testing Basic HTTP-SERVER</title>\r\n"
-                         "</head>\r\n"
-                         "<body>\r\n"
-                         "<h1>Hello kurai-webserver!</h1>\r\n"
-                         "</body>\r\n"
-                         "</html>\r\n";
 
-		write(new_socket,response, strlen(response));
+			K_httpRes *res = k_http_res_create();
+			k_http_res_set_header(res, "Content-Type", "text/html");
+			char *body = 	"<!DOCTYPE html>\r\n" 
+								"<html>\r\n" 
+								"<head>\r\n" 
+								"<title>Testing Basic HTTP-SERVER</title>\r\n" 
+								"</head>\r\n" 
+								"<body>\r\n" 
+								"<h1>Hello kurai!</h1>\r\n" 
+								"</body>\r\n" 
+								"</html>\r\n"
+								;
+			k_http_res_set_body(res, body);
+
+
+			k_http_res_send(new_socket, res);
+
+			
+			k_http_res_free(res);
+
+
 		close(new_socket);
 	}
 };

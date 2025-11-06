@@ -76,10 +76,47 @@ typedef struct {
 } K_httpRes;
 
 
-
-
-
 // === Helper functions ===
+
+
+// === Request functions ===
+
+/**
+* @name k_http_req_parse()
+* @brief Parse a raw HTTP request.
+* @param raw_request Pointer to the raw HTTP request string.
+* @return Pointer to the parsed HTTP request structure.
+*/
+K_httpReq *k_http_req_parse(const char *raw_request);
+
+/**
+* @name k_http_req_free()
+* @brief Free the resources used by the HTTP request.
+* @param req Pointer to the HTTP request structure.
+* @return None
+*/
+void k_http_req_free(K_httpReq *req);
+
+
+// === Response functions ===
+
+/**
+* @name k_http_res_create()
+* @brief Create a new HTTP response.
+* @param None
+* @return Pointer to the newly created HTTP response structure.
+*/
+K_httpRes *k_http_res_create();
+
+
+/**
+* @name k_http_res_set_body()
+* @brief Set the body of the HTTP response.
+* @param res Pointer to the HTTP response structure.
+* @param body Pointer to the response body string.
+* @return None
+*/
+void k_http_res_set_body(K_httpRes *res, const char *body);
 
 
 /**
