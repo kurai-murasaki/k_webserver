@@ -1,6 +1,0 @@
-/home/kurai/projects/kurai-webserver/build/CMakeFiles/edit_cache.dir
-/home/kurai/projects/kurai-webserver/build/CMakeFiles/rebuild_cache.dir
-/home/kurai/projects/kurai-webserver/build/core/CMakeFiles/k_core.dir
-/home/kurai/projects/kurai-webserver/build/core/CMakeFiles/kurai-webserver.dir
-/home/kurai/projects/kurai-webserver/build/core/CMakeFiles/edit_cache.dir
-/home/kurai/projects/kurai-webserver/build/core/CMakeFiles/rebuild_cache.dir
