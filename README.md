@@ -5,8 +5,9 @@
 
 ## Table of Contents
 - 💜[About](#about)
-- 💜[Features](#features)
+- 💜[Roadmap](#roadmap)
 - 💜[Installation](#installation)
+- 💜[API](#api)
 
 ---
 
@@ -18,7 +19,7 @@ A minimalist HTTP server written in C.
 
 ---
 
-## Features
+## Roadmap
 - [🖤] custom http request parsing
 - [💜] custom json parsing 
 - [💜] Multi-threading / async support
@@ -39,3 +40,9 @@ cd kurai-webserver
 ./run.sh -b Release
 ./run.sh -r
 ```
+
+ ---
+
+## API
+- [🖤] [k_err.h](API.md#k_err)
+---
