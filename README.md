@@ -44,7 +44,8 @@ cd kurai-webserver
  ---
 
 ## API
-- [🖤] [k_err.h](API.md#k_err)
-- [🖤] [k_http](API.md#k_http)
-- [🖤] [k_json](API.md#k_json)
+- [💜] [API Docs](docs/API.md)
+	- [🖤] [k_err](docs/k_err.md)
+	- [🖤] [k_http](docs/k_http.md)
+	- [🖤] [k_json](docs/k_json.md)
 ---
