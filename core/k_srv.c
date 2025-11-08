@@ -53,6 +53,10 @@ struct K_server *create_server(
 
 
 
+//TODO Implement propper event loop before creating the (router,middleware,req handlers etc...) system
+
+
+
 void launch(struct K_server *server){
 	char buffer[BUFFER_SIZE];
 
