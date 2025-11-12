@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Small helper script to build/run/debug the kurai-webserver
 # Usage examples:
 #   ./run.sh            # build Release and run (default)
@@ -7,6 +6,7 @@
 #   ./run.sh -b Debug   # build with specified type (Debug or Release)
 #   ./run.sh -r         # only run (no build)
 #   ./run.sh -d         # clean, build Debug, and run under gdb
+#   ./run.sh -c         # clean build directory only
 
 set -euo pipefail
 
@@ -24,7 +24,8 @@ Usage: $0 [options]
 Options:
   -b [Release|Debug]   Build the project. Optionally provide build type (default: Release).
   -r                   Run the built application (no build).
-  -d                   Debug: remove build directory, build Debug, then run under gdb.
+  -d                   Debug: clean, build Debug, and run under gdb.
+  -c                   Clean build directory only.
   -h, --help           Show this help and exit.
 
 No flags: build Release and run the application.
@@ -36,6 +37,7 @@ EOF
 ACTION_BUILD=0
 ACTION_RUN=0
 ACTION_DEBUG=0
+ACTION_CLEAN=0
 BUILD_TYPE="Release"
 
 # Simple arg parsing: allow -b with optional build type as next token.
@@ -59,6 +61,10 @@ while [[ $# -gt 0 ]]; do
 			ACTION_DEBUG=1
 			shift
 			;;
+		-c|--clean)
+			ACTION_CLEAN=1
+			shift
+			;;
 		-h|--help)
 			usage
 			;;
@@ -70,11 +76,20 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Default behavior: no flags => build Release and run
-if [[ $ACTION_BUILD -eq 0 && $ACTION_RUN -eq 0 && $ACTION_DEBUG -eq 0 ]]; then
+if [[ $ACTION_BUILD -eq 0 && $ACTION_RUN -eq 0 && $ACTION_DEBUG -eq 0 && $ACTION_CLEAN -eq 0 ]]; then
 	ACTION_BUILD=1
 	ACTION_RUN=1
 	BUILD_TYPE="Release"
 fi
+
+clean_build_dir() {
+	if [[ -d "$BUILD_DIR" ]]; then
+		echo "[run.sh] Cleaning build directory: $BUILD_DIR"
+		rm -rf "$BUILD_DIR"
+	else
+		echo "[run.sh] Nothing to clean (no build directory found)."
+	fi
+}
 
 build_app() {
 	local bt="$1"
@@ -98,19 +113,26 @@ run_app() {
 }
 
 debug_app() {
-	echo "[run.sh] Debug flow: removing $BUILD_DIR and building Debug..."
-	rm -rf "$BUILD_DIR"
+	echo "[run.sh] Debug flow..."
+	clean_build_dir
 	build_app Debug
 	if [[ ! -x "$BIN_PATH" ]]; then
 		echo "Executable not found after debug build: $BIN_PATH" >&2
 		return 1
 	fi
 	echo "[run.sh] Launching gdb: $BIN_PATH"
-	# Run gdb with the binary
 	gdb --args "$BIN_PATH"
 }
 
 # Execute requested actions
+if [[ $ACTION_CLEAN -eq 1 ]]; then
+	clean_build_dir
+	# If only cleaning, stop here
+	if [[ $ACTION_BUILD -eq 0 && $ACTION_RUN -eq 0 && $ACTION_DEBUG -eq 0 ]]; then
+		exit 0
+	fi
+fi
+
 if [[ $ACTION_DEBUG -eq 1 ]]; then
 	debug_app
 	exit $?

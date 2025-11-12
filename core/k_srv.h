@@ -47,7 +47,7 @@ struct K_server{
 	int service;
 	int protocol;
 	int backlog;
-	u_long interface;
+	uint32_t interface;
 
 	int socket;
 	struct sockaddr_in address;
@@ -72,7 +72,7 @@ struct K_server{
 *          creates a socket, binds it to the specified address, and starts listening
 *          for incoming connections.
 */
-struct K_server *create_server(int domain, int port, int service, int protocol, int backlog, u_long interface, void(*launch)(struct K_server *server));
+struct K_server *k_create_server(int domain, int port, int service, int protocol, int backlog, uint32_t interface, void(*launch)(struct K_server *server));
 
 
 /**
@@ -81,7 +81,7 @@ struct K_server *create_server(int domain, int port, int service, int protocol, 
 * @param server Pointer to the K_server instance
 * @return void
 */
-void launch(struct K_server *server);
+void k_launch(struct K_server *server);
 
 
 #endif // K_SRV_H

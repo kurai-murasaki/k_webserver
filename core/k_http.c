@@ -127,7 +127,7 @@ void k_http_req_free(K_httpReq *req){
 //================================================
 
 
-K_httpRes *k_http_res_create(){
+K_httpRes *k_http_res_create(void){
 	K_httpRes *res = calloc(1, sizeof(K_httpRes));
 	if(!res) return NULL;
 	res->status_code = 200;

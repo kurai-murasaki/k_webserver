@@ -118,7 +118,7 @@ void k_http_req_free(K_httpReq *req);
 * @param None
 * @return Pointer to the newly created HTTP response structure.
 */
-K_httpRes *k_http_res_create();
+K_httpRes *k_http_res_create(void);
 
 
 /**
